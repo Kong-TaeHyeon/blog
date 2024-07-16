@@ -1,5 +1,9 @@
 package com.blog.blog.global.auth;
 
+import com.blog.blog.global.auth.oauth.OAuth2UserService;
+import com.blog.blog.global.auth.oauth.handler.OAuth2FailureHandler;
+import com.blog.blog.global.auth.oauth.handler.OAuth2SuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,7 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler successHandler;
+    private final OAuth2FailureHandler failureHandler;
 
     private static final String[] ALLOWED_URI = {
             "/api/auth/login", "/api/auth/register", "/oauth2/**"
@@ -30,17 +39,16 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(ALLOWED_URI).permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults());
-
-
-
-
-
+                .oauth2Login(oauth -> oauth.userInfoEndpoint(userInfo -> userInfo.userService(oAuth2UserService))
+                        .successHandler(successHandler)
+                        .failureHandler(failureHandler)
+                );
 
         return http.build();
     }

@@ -34,8 +34,8 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfo.of(registrationId, oAuth2UserAttributes);
         User user = getOrSave(oAuth2UserInfo);
 
-        return new PrincipalDetails(user, oAuth2UserAttributes, userNameAttributeName);
 
+        return new PrincipalDetails(user, oAuth2UserAttributes, userNameAttributeName);
     }
 
     public User getOrSave(OAuth2UserInfo oAuth2UserInfo) {
