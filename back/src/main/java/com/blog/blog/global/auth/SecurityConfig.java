@@ -2,6 +2,7 @@ package com.blog.blog.global.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -13,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] ALLOWED_URI = {
-            "/api/auth/login", "/api/auth/register",
+            "/api/auth/login", "/api/auth/register", "/oauth2/**"
     };
 
     @Bean
@@ -33,7 +34,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(ALLOWED_URI).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                .oauth2Login(Customizer.withDefaults());
+
+
+
+
+
 
         return http.build();
     }
