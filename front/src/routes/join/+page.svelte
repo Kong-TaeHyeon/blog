@@ -1,13 +1,13 @@
-<div class="flex flex-col items-center justify-center">
-	<div>Register Page</div>
-	<form class="gap-12">
-		<div>
-			<label for="email">Email</label>
-			<input class="border-2 border-black" type="email" />
+<div class="flex flex-col items-center justify-center p-20 font-semibold">
+	<a href="/main" class="text-[32px]">Kong's Blog</a>
+
+	<div class="w-[400px]">
+		<div class="flex flex-col items-center justify-center gap-2 mb-4">
+			<input class=" w-full border-[1px] border-black" placeholder="EMAIL" />
+
+			<input class="w-full border-[1px] border-black" placeholder="NICKNAME" />
+			<input class="w-full border-[1px] border-black" placeholder="비밀번호" />
+			<button class="w-full h-8 text-white bg-black">회원가입</button>
 		</div>
-		<div>
-			<label for="password">Password</label>
-			<input class="border-2 border-black" type="password" />
-		</div>
-	</form>
+	</div>
 </div>
