@@ -27,10 +27,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtProvider.createToken(authentication);
 
         Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60);
+
+        cookie.setHttpOnly(false);
+
         response.addCookie(cookie);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        log.info("User Name : {}", userDetails.getUsername());
         response.sendRedirect("http://localhost:5173/main");
     }
 }
