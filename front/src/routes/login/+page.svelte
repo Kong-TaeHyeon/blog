@@ -39,7 +39,9 @@
 		</div>
 
 		<div class="flex flex-col items-center justify-center w-full gap-1">
-			<button class="w-full border-black border-[1px]">KaKao Login</button>
+			<button on:click={() => goOAuthLogin('kakao')} class="w-full border-black border-[1px]"
+				>KaKao Login</button
+			>
 			<button class="w-full border-black border-[1px]">GitHub Login</button>
 		</div>
 	</div>
