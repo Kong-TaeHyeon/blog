@@ -1,6 +1,6 @@
 package com.blog.blog.global.auth.oauth;
 
-import com.blog.blog.user.Role;
+import com.blog.blog.user.entity.Role;
 import com.blog.blog.user.entity.User;
 
 import java.util.Map;

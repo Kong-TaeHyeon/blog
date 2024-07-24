@@ -1,6 +1,5 @@
 package com.blog.blog.user.entity;
 
-import com.blog.blog.user.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

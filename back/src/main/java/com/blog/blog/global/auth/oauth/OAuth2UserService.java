@@ -1,7 +1,7 @@
 package com.blog.blog.global.auth.oauth;
 
 import com.blog.blog.global.auth.PrincipalDetails;
-import com.blog.blog.user.UserRepository;
+import com.blog.blog.user.repository.UserRepository;
 import com.blog.blog.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +22,7 @@ public class SecurityConfig {
     private final OAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
     private final OAuth2FailureHandler failureHandler;
+    private final JwtFilter jwtFilter;
 
     private static final String[] ALLOWED_URI = {
             "/api/auth/login", "/api/auth/register", "/oauth2/**"
@@ -45,6 +47,9 @@ public class SecurityConfig {
                         .requestMatchers(ALLOWED_URI).permitAll()
                         .anyRequest().authenticated()
                 )
+
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .oauth2Login(oauth -> oauth.userInfoEndpoint(userInfo -> userInfo.userService(oAuth2UserService))
                         .successHandler(successHandler)
                         .failureHandler(failureHandler)
