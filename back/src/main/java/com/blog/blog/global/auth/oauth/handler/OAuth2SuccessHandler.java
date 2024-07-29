@@ -29,9 +29,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60);
-
-        cookie.setHttpOnly(false);
-
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
         response.sendRedirect("http://localhost:5173/main");
