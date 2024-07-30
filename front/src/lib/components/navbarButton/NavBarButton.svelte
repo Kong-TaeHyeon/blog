@@ -1,8 +1,17 @@
 <script>
-	export let name;
+	import { createEventDispatcher } from 'svelte';
 
+	export let name;
 	export let menu;
 	export let activatedMenu;
+
+	const dispatch = createEventDispatcher();
+
+	const onClickHandler = () => {
+		dispatch('click', {
+			menu: menu
+		});
+	};
 </script>
 
 {#if activatedMenu == menu}
@@ -14,8 +23,9 @@
 	</div>
 {:else}
 	<div class="mr-1">
-		<button class="inline-block px-4 py-2 font-semibold text-gray-400 bg-white hover:text-blue-800"
-			>{name}</button
+		<button
+			class="inline-block px-4 py-2 font-semibold text-gray-400 bg-white hover:text-blue-800"
+			on:click={onClickHandler}>{name}</button
 		>
 	</div>
 {/if}

@@ -1,3 +1,9 @@
+<script>
+	const goOAuthLogin = (/** @type {any} */ registrationId) => {
+		window.location.href = `http://localhost:8080/oauth2/authorization/${registrationId}`;
+	};
+</script>
+
 <div class="flex flex-col items-center justify-center p-20 font-semibold">
 	<a href="/main" class="text-[32px]">Kong's Blog</a>
 
@@ -14,7 +20,9 @@
 		</div>
 
 		<div class="flex flex-col items-center justify-center w-full gap-1">
-			<button class="w-full border-black border-[1px]">KaKao Login</button>
+			<button on:click={() => goOAuthLogin('kakao')} class="w-full border-black border-[1px]"
+				>KaKao Login</button
+			>
 			<button class="w-full border-black border-[1px]">GitHub Login</button>
 		</div>
 	</div>
