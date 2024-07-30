@@ -31,7 +31,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     private static final String[] ALLOWED_URI = {
-            "/api/auth/login", "/api/auth/register", "/oauth2/**"
+            "/api/auth/join","/api/auth/login", "/api/auth/register", "/oauth2/**"
     };
 
     @Bean

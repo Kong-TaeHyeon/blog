@@ -1,12 +1,17 @@
 package com.blog.blog.user.controller;
 
+import com.blog.blog.global.dto.ResponseDto;
+import com.blog.blog.user.dto.UserJoinRequest;
+import com.blog.blog.user.dto.UserJoinResponse;
 import com.blog.blog.user.dto.UserLoginRequest;
+import com.blog.blog.user.entity.User;
 import com.blog.blog.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,5 +43,17 @@ public class UserController {
 
 
         return new RedirectView("http://localhost:5173/main");
+    }
+
+    @PostMapping("/api/auth/join")
+    public ResponseEntity<ResponseDto<UserJoinResponse>> join(@RequestBody UserJoinRequest userJoinRequest) {
+        User user = userService.join(userJoinRequest.email, userJoinRequest.nickname, userJoinRequest.password);
+        ResponseDto<UserJoinResponse> responseDto = new ResponseDto<>();
+
+        responseDto.data = new UserJoinResponse(user.getEmail(), user.getNickname());
+        responseDto.status = HttpStatus.CREATED;
+
+
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 }
