@@ -3,7 +3,15 @@
 	let nickname;
 	let password;
 
-	const onSubmitHandler = async () => {};
+	const onSubmitHandler = async () => {
+		const response = await fetch('http://localhost:8080/api/auth/join', {
+			body: JSON.stringify({ email, nickname, password }),
+			method: 'post'
+		});
+
+		const data = await response.json();
+		console.log(data);
+	};
 </script>
 
 <div class="flex flex-col items-center justify-center p-20 font-semibold">
