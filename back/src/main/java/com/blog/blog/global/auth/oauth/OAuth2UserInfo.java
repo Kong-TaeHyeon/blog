@@ -44,6 +44,7 @@ public record OAuth2UserInfo(
     public User toEntity() {
         return User.builder()
                 .email(email)
+                .nickname(name)
                 .role(Role.ROLE_GUEST)
                 .build();
     }

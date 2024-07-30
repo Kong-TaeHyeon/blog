@@ -3,6 +3,7 @@ package com.blog.blog.user.service;
 import com.blog.blog.global.auth.CustomUserDetailService;
 import com.blog.blog.global.auth.JwtProvider;
 
+import com.blog.blog.user.entity.User;
 import com.blog.blog.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,19 @@ public class UserService {
         String token = jwtProvider.createToken(authentication);
 
         return token;
+    }
 
+    public User join(String email, String nickname, String password) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException();
+        }
+
+        User user = User.builder()
+                .email(email)
+                .nickname(nickname)
+                .password(password)
+                .build();
+
+        return userRepository.save(user);
     }
 }
