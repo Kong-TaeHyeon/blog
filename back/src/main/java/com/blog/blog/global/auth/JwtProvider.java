@@ -32,8 +32,6 @@ public class JwtProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
 
-        log.info("authentication Name : {} ", authentication.getName());
-
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("role", authorities)
