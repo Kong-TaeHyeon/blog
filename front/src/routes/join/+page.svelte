@@ -4,9 +4,19 @@
 	let password;
 
 	const onSubmitHandler = async () => {
+		const body = JSON.stringify({
+			email,
+			nickname,
+			password
+		});
+		console.log(body);
+
 		const response = await fetch('http://localhost:8080/api/auth/join', {
 			body: JSON.stringify({ email, nickname, password }),
-			method: 'post'
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 
 		const data = await response.json();
@@ -19,10 +29,25 @@
 
 	<div class="w-[400px]">
 		<div class="flex flex-col items-center justify-center gap-2 mb-4">
-			<input class=" w-full border-[1px] border-black" placeholder="EMAIL" type="email" />
-			<input class="w-full border-[1px] border-black" placeholder="NICKNAME" type="text" />
-			<input class="w-full border-[1px] border-black" placeholder="비밀번호" type="password" />
-			<button class="w-full h-8 text-white bg-black">회원가입</button>
+			<input
+				class=" w-full border-[1px] border-black"
+				placeholder="EMAIL"
+				type="email"
+				bind:value={email}
+			/>
+			<input
+				class="w-full border-[1px] border-black"
+				placeholder="NICKNAME"
+				type="text"
+				bind:value={nickname}
+			/>
+			<input
+				class="w-full border-[1px] border-black"
+				placeholder="비밀번호"
+				type="password"
+				bind:value={password}
+			/>
+			<button on:click={onSubmitHandler} class="w-full h-8 text-white bg-black">회원가입</button>
 		</div>
 	</div>
 </div>

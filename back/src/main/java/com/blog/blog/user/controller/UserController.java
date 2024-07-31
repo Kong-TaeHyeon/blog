@@ -36,17 +36,15 @@ public class UserController {
         cookie.setMaxAge(60 * 60);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-
+        
         return new RedirectView("http://localhost:5173/main");
     }
 
     @PostMapping("/api/auth/join")
     public ResponseEntity<ResponseDto<UserJoinResponse>> join(@RequestBody UserJoinRequest userJoinRequest) {
+
+        log.info("Join DTO : {} , {}, {}", userJoinRequest.email, userJoinRequest.password, userJoinRequest.nickname);
+
         User user = userService.join(userJoinRequest.email, userJoinRequest.nickname, userJoinRequest.password);
         ResponseDto<UserJoinResponse> responseDto = new ResponseDto<>();
 

@@ -3,6 +3,7 @@ package com.blog.blog.user.service;
 import com.blog.blog.global.auth.CustomUserDetailService;
 import com.blog.blog.global.auth.JwtProvider;
 
+import com.blog.blog.user.entity.Role;
 import com.blog.blog.user.entity.User;
 import com.blog.blog.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,7 @@ public class UserService {
                 .email(email)
                 .nickname(nickname)
                 .password(password)
+                .role(Role.ROLE_USER)
                 .build();
 
         return userRepository.save(user);

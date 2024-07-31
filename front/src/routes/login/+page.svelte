@@ -17,7 +17,7 @@
 	let password;
 
 	const goOAuthLogin = () => {
-		const URL = BACK_API('/oauth/login/kakao');
+		const URL = BACK_API('/oauth2/authorization/kakao');
 		window.location.href = URL;
 	};
 

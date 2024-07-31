@@ -32,6 +32,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
+        response.setHeader("Authorization", token);
         response.sendRedirect("http://localhost:5173/main");
     }
 }
