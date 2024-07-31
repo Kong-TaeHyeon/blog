@@ -7,6 +7,7 @@
 	const { isLogin } = data;
 
 	onMount(() => {
+		console.log(isLogin);
 		if (isLogin) {
 			goto('/main');
 		}
@@ -38,12 +39,6 @@
 
 		console.log(response);
 		return;
-
-		const body = await response.text();
-		console.log(body);
-		if (body === 'good') {
-			window.location.href = '/main';
-		}
 	};
 </script>
 
