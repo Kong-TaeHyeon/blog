@@ -52,19 +52,18 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
-        if (!StringUtils.hasText(token)) {
-            return false;
-        }
-
         Claims claims = parseClaim(token);
-        return claims.getExpiration().before(new Date());
+        return claims.getExpiration().after(new Date());
     }
 
     private Claims parseClaim(String token) {
         try {
             return Jwts.parser().setSigningKey(TOKEN_SECRET_KEY.getBytes()).parseClaimsJws(token).getBody();
-        } catch (Exception e) {
-            throw new RuntimeException();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new TokenException("INVALID_TOKEN");
         }
     }
 }

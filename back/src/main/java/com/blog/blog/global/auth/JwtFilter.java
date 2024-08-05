@@ -25,25 +25,24 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
+
             String token = Arrays.stream(request.getCookies())
                     .filter(c -> "token".equals(c.getName()))
                     .map(Cookie::getValue)
                     .findFirst()
                     .orElse(null);
 
-            log.info("token in cookie : {}" ,token);
+            log.info("token = {}", token);
 
-            if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                if (jwtProvider.validateToken(token)) {
-                    Authentication authentication = jwtProvider.getAuthentication(token);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            boolean isValid = jwtProvider.validateToken(token);
+            log.info("isValid = {}", isValid);
 
+            if (jwtProvider.validateToken(token)) {
+                log.info("Validation Token");
+                Authentication authentication = jwtProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception e) {
-//            e.printStackTrace();
-        }
+
         filterChain.doFilter(request, response);
     }
 }

@@ -26,6 +26,7 @@
 		const httpURL = BACK_API('/api/auth/login');
 		const response = await fetch(httpURL, {
 			method: 'POST',
+			mode: 'cors',
 			headers: {
 				'Content-Type': 'application/json'
 			},

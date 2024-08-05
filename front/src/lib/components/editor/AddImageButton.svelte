@@ -30,8 +30,12 @@
 	};
 </script>
 
-<button on:click={onClick} on:keydown={onKeyDown}>
-	Image
+<button
+	class="px-2 py-1 font-bold text-white bg-gray-600 rounded hover:bg-blue-700"
+	on:click={onClick}
+	on:keydown={onKeyDown}
+>
+	사진 첨부
 	<input
 		style="display:none"
 		aria-label="lorem ipsum"

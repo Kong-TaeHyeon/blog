@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import { getHandlePaste, getOnTransaction } from './editorCustom';
 	import AddImageButton from './AddImageButton.svelte';
+	import { BACK_API } from '$lib/constants/BackAPI';
 
 	let element;
 	let editor;
@@ -29,7 +30,7 @@
 					allowBase64: true
 				})
 			],
-			content: ``,
+			content: `내용을 입력하세요`,
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
@@ -43,32 +44,55 @@
 		});
 	});
 
-	let htmlTest;
+	let content = ``;
+	let title = ``;
 
-	const onSaveHandler = () => {
+	const onSaveHandler = async () => {
 		console.log(editor.getHTML());
-		htmlTest = editor.getHTML();
+		content = editor.getHTML();
+
+		const body = {
+			title,
+			content
+		};
+
+		const response = await fetch('http://localhost:8080/api/post', {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			method: 'post',
+			credentials: 'include',
+			body: JSON.stringify(body)
+		});
+
+		const test = await response.json();
+		console.log(test);
 	};
 </script>
 
+<input bind:value={title} class="p-4 m-4 w-full h-10 border-[1px]" placeholder="제목" />
+
 {#if editor}
-	<div>
+	<div class="p-4">
 		<AddImageButton bind:editor />
 	</div>
 {/if}
-<div class="min-h-40 wrapper border-[1px]">
-	<div class="element-wrapper" bind:this={element} />
+<div class="h-[400px] overflow-scroll wrapper border-[1px]">
+	<div class="w-full h-full element-wrapper" bind:this={element} />
 </div>
 
-<div class="flex flex-row items-center justify-center gap-4">
-	<button on:click={onSaveHandler}>저장</button>
-	<button>취소</button>
+<div class="flex flex-row items-center justify-center gap-4 p-4">
+	<button
+		class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+		on:click={onSaveHandler}>저장</button
+	>
+	<button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">취소</button>
 </div>
 
 <div
 	class="mx-auto prose-sm prose tiptap ProseMirror sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
 >
-	{@html htmlTest}
+	{@html content}
 </div>
 
 <style>

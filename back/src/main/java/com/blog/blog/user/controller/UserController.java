@@ -36,7 +36,7 @@ public class UserController {
         cookie.setMaxAge(60 * 60);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
-        
+
         return new RedirectView("http://localhost:5173/main");
     }
 
