@@ -35,7 +35,9 @@
 <div class="p-4">
 	<div class="flex justify-between">
 		<h1 class="mb-4 text-2xl font-bold">글목록</h1>
-		<button class="mb-4 text-xl font-semibold text-gray-400 hover:text-blue-300">글쓰기</button>
+		<a href="/post/add" class="mb-4 text-xl font-semibold text-gray-400 hover:text-blue-300"
+			>글쓰기</a
+		>
 	</div>
 	<div class="flex justify-center itmes-center">
 		{#if posts.length === 0}

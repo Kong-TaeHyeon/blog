@@ -15,7 +15,7 @@
 
 	const onClickHandler = (e) => {
 		activatedMenu = e.detail.menu;
-		goto(`/${activatedMenu}`);
+		window.location.href = activatedMenu;
 	};
 
 	const onLogoutHandler = () => {
