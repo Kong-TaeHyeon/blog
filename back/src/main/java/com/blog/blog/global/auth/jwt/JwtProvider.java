@@ -1,5 +1,7 @@
-package com.blog.blog.global.auth;
+package com.blog.blog.global.auth.jwt;
 
+import com.blog.blog.global.auth.exception.TokenInvalidException;
+import com.blog.blog.global.auth.exception.TokenNullException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.*;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -61,9 +62,12 @@ public class JwtProvider {
             return Jwts.parser().setSigningKey(TOKEN_SECRET_KEY.getBytes()).parseClaimsJws(token).getBody();
         }
 
+        catch (IllegalArgumentException e) {
+            throw new TokenNullException();
+        }
+
         catch (Exception e) {
-            e.printStackTrace();
-            throw new TokenException("INVALID_TOKEN");
+            throw new TokenInvalidException();
         }
     }
 }

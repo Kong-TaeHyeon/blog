@@ -1,25 +1,23 @@
 package com.blog.blog.global.auth;
 
+import com.blog.blog.global.auth.jwt.JwtFilter;
+import com.blog.blog.global.auth.jwt.TokenExceptionFilter;
 import com.blog.blog.global.auth.oauth.OAuth2UserService;
-import com.blog.blog.global.auth.oauth.TokenExceptionFilter;
 import com.blog.blog.global.auth.oauth.handler.OAuth2FailureHandler;
 import com.blog.blog.global.auth.oauth.handler.OAuth2SuccessHandler;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,6 +35,11 @@ public class SecurityConfig {
 
     private static final String[] ALLOWED_URI = {
             "/api/auth/join","/api/auth/login", "/api/auth/register", "/oauth2/authorize/**", "/oauth/token/**"
+
+    };
+
+    private static final String[] ONLY_GET_URI = {
+            "/api/post/**", "/api/project/**"
     };
 
     @Bean
@@ -66,10 +69,12 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(ALLOWED_URI).permitAll()
+                        .requestMatchers(HttpMethod.GET, ONLY_GET_URI).permitAll()
                         .anyRequest().authenticated()
+
                 )
 
-                .addFilterBefore(jwtFilter, OAuth2AuthorizationRequestRedirectFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenExceptionFilter(), jwtFilter.getClass())
 
                 .oauth2Login(oauth -> oauth.userInfoEndpoint(userInfo -> userInfo.userService(oAuth2UserService))

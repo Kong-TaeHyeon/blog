@@ -37,8 +37,6 @@
 
 			credentials: 'include'
 		});
-
-		console.log(response);
 		return;
 	};
 </script>

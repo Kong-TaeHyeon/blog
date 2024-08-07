@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	let email;
 	let nickname;
 	let password;
@@ -9,8 +11,6 @@
 			nickname,
 			password
 		});
-		console.log(body);
-
 		const response = await fetch('http://localhost:8080/api/auth/join', {
 			body: JSON.stringify({ email, nickname, password }),
 			method: 'post',
@@ -20,12 +20,14 @@
 		});
 
 		const data = await response.json();
-		console.log(data);
+		if (data.status === 'CREATED') {
+			goto('/login');
+		}
 	};
 </script>
 
 <div class="flex flex-col items-center justify-center p-20 font-semibold">
-	<a href="/main" class="text-[32px]">Kong's Blog</a>
+	<a href="/" class="text-[32px]">Kong's Blog</a>
 
 	<div class="w-[400px]">
 		<div class="flex flex-col items-center justify-center gap-2 mb-4">

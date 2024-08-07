@@ -56,6 +56,8 @@
 			content
 		};
 
+		console.log(body);
+
 		const response = await fetch('http://localhost:8080/api/post', {
 			headers: {
 				'Content-Type': 'application/json'

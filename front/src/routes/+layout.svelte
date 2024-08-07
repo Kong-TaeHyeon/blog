@@ -10,8 +10,13 @@
 	let { isLogin } = data;
 
 	onMount(() => {
-		activatedMenu = window.location.pathname;
-		console.log(activatedMenu);
+		if (window.location.pathname.startsWith('/post')) {
+			activatedMenu = '/post';
+		} else if (window.location.pathname.startsWith('/project')) {
+			activatedMenu = 'project';
+		} else if (window.location.pathname.startsWith('/')) {
+			activatedMenu = '/';
+		}
 	});
 
 	const onClickHandler = (e) => {

@@ -1,7 +1,7 @@
 package com.blog.blog.user.service;
 
 import com.blog.blog.global.auth.CustomUserDetailService;
-import com.blog.blog.global.auth.JwtProvider;
+import com.blog.blog.global.auth.jwt.JwtProvider;
 
 import com.blog.blog.user.entity.Role;
 import com.blog.blog.user.entity.User;
@@ -11,8 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 @Slf4j

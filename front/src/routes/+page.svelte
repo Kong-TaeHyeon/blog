@@ -3,3 +3,5 @@
 
 	onMount(() => {});
 </script>
+
+<div>Hi</div>

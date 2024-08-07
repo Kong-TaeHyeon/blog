@@ -37,14 +37,11 @@ public class UserController {
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
-        return new RedirectView("http://localhost:5173/main");
+        return new RedirectView("http://localhost:5173/");
     }
 
     @PostMapping("/api/auth/join")
     public ResponseEntity<ResponseDto<UserJoinResponse>> join(@RequestBody UserJoinRequest userJoinRequest) {
-
-        log.info("Join DTO : {} , {}, {}", userJoinRequest.email, userJoinRequest.password, userJoinRequest.nickname);
-
         User user = userService.join(userJoinRequest.email, userJoinRequest.nickname, userJoinRequest.password);
         ResponseDto<UserJoinResponse> responseDto = new ResponseDto<>();
 

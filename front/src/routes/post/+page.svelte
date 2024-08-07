@@ -1,34 +1,20 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { BACK_API } from '$lib/constants/BackAPI';
 
-	let post = {
-		id: 1,
-		title: '제목1',
-		writer: '작성자1'
-	};
-	let post1 = {
-		id: 1,
-		title: '제목112312321321321',
-		writer: '작성자2'
-	};
-	let posts = [post, post1];
+	let posts = [];
 
 	onMount(async () => {
-		// const response = await fetch('/api/posts');
-		// posts = await response.json();
-		let post = {
-			id: 1,
-			title: '제목1',
-			summary: '요약1'
-		};
-
-		console.log(post);
-		posts.push(post);
+		const response = await fetch(BACK_API('/api/post'), {
+			method: 'GET',
+			credentials: 'include'
+		});
+		posts = await response.json();
 	});
 
 	const viewPost = (id) => {
-		goto(`/posts/${id}`);
+		goto(`/post/${id}`);
 	};
 </script>
 
@@ -50,8 +36,8 @@
 							class="w-full h-32 p-4 border rounded cursor-pointer hover:bg-gray-100"
 							on:click={() => viewPost(post.id)}
 						>
-							<h2 class="text-xl font-semibold">{post.title}</h2>
-							<p class="text-gray-600">{post.writer}</p>
+							<h2 class="text-xl font-semibold">{post?.title}</h2>
+							<p class="text-gray-600">{post?.author?.nickname}</p>
 						</button>
 					</li>
 				{/each}

@@ -18,7 +18,7 @@
 	<div class="mr-1 -mb-px">
 		<button
 			class="inline-block px-4 py-2 font-semibold text-blue-700 bg-white border-t border-l border-r rounded-t"
-			>{name}</button
+			on:click={onClickHandler}>{name}</button
 		>
 	</div>
 {:else}

@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 
 export const load = ({ locals, url }) => {
 	if (url.pathname.startsWith('/logout')) {
-		redirect(302, '/main');
+		redirect(302, '/');
 	}
 
 	if (locals.token)
