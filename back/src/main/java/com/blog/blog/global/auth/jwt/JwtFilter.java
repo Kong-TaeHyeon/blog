@@ -25,7 +25,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
 
     private static final String[] ALLOWED_URI = {
-            "/api/auth/join","/api/auth/login", "/api/auth/register", "/oauth2/authorize/**", "/oauth/token/**",
+            "/api/auth/join","/api/auth/login", "/api/auth/register", "/oauth2/authorize/**", "/oauth/token/**", "/api/image"
     };
 
     private static final String[] GET_ONLY_URI = {
