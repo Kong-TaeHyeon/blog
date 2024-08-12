@@ -2,15 +2,19 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { BACK_API } from '$lib/constants/BackAPI';
+	import { page } from '$app/stores';
 
 	let posts = [];
 
 	onMount(async () => {
-		const response = await fetch(BACK_API('/api/post'), {
+		const pageNum = $page.url.searchParams.get('page') ?? 0;
+
+		const response = await fetch(BACK_API(`/api/post?page=${pageNum}&size=10`), {
 			method: 'GET',
 			credentials: 'include'
 		});
 		posts = await response.json();
+		console.log(posts);
 	});
 
 	const viewPost = (id) => {

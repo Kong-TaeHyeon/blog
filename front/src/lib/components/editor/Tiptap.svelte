@@ -13,6 +13,7 @@
 
 	let element;
 	let editor;
+	let imageIds = [];
 
 	onMount(() => {
 		editor = new Editor({
@@ -48,7 +49,6 @@
 	let title = ``;
 
 	const onSaveHandler = async () => {
-		console.log(editor.getHTML());
 		content = editor.getHTML();
 
 		const body = {
@@ -56,19 +56,22 @@
 			content
 		};
 
-		console.log(body);
-
-		const response = await fetch('http://localhost:8080/api/post', {
+		fetch('http://localhost:8080/api/post', {
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			method: 'post',
 			credentials: 'include',
 			body: JSON.stringify(body)
+		}).then((res) => {
+			if (res.status === 200) {
+				alert('저장되었습니다.');
+				window.location.href = '/post';
+			}
 		});
 
-		const test = await response.json();
-		console.log(test);
+		// const test = await response.json();
+		// console.log(test);
 	};
 </script>
 
@@ -89,12 +92,6 @@
 		on:click={onSaveHandler}>저장</button
 	>
 	<button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">취소</button>
-</div>
-
-<div
-	class="mx-auto prose-sm prose tiptap ProseMirror sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
->
-	{@html content}
 </div>
 
 <style>

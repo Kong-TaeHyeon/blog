@@ -6,10 +6,12 @@ import com.blog.blog.post.repository.PostRepository;
 import com.blog.blog.user.entity.User;
 import com.blog.blog.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -38,9 +40,9 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> findAll() {
-        List<Post> posts = postRepository.findAll();
-        return posts;
+    public List<Post> findAll(Pageable pageable) {
+
+        return postRepository.findAllByOrderByIdDesc(pageable).getContent();
     }
 
     public Post findById(Long id) {

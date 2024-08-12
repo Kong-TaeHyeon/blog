@@ -8,6 +8,7 @@ import com.blog.blog.post.service.PostService;
 import com.blog.blog.user.dto.UserGetResponse;
 import com.blog.blog.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,8 +48,10 @@ public class PostController {
     }
 
     @GetMapping("/api/post")
-    public ResponseEntity<List<PostGetResponse>> getPosts() {
-        List<Post> posts= postService.findAll();
+    public ResponseEntity<List<PostGetResponse>> getPosts(Pageable pageable) {
+        log.info("Page Number = {}", pageable.getPageNumber());
+        log.info("Page Size = {}", pageable.getPageSize());
+        List<Post> posts= postService.findAll(pageable);
         List<PostGetResponse> responses = posts.stream()
                 .map(post -> {
                     User user = post.getUser();
