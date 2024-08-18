@@ -64,14 +64,12 @@
 			credentials: 'include',
 			body: JSON.stringify(body)
 		}).then((res) => {
+			console.log(res);
 			if (res.status === 200) {
 				alert('저장되었습니다.');
 				window.location.href = '/post';
 			}
 		});
-
-		// const test = await response.json();
-		// console.log(test);
 	};
 </script>
 

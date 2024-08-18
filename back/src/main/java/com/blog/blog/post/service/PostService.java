@@ -42,6 +42,9 @@ public class PostService {
 
     public List<Post> findAll(Pageable pageable) {
 
+
+        Page<Post> test= postRepository.findAllByOrderByIdDesc(pageable);
+
         return postRepository.findAllByOrderByIdDesc(pageable).getContent();
     }
 
