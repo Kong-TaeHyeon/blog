@@ -70,6 +70,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(ALLOWED_URI).permitAll()
                         .requestMatchers(HttpMethod.GET, ONLY_GET_URI).permitAll()
+                        .requestMatchers(HttpMethod.DELETE, ONLY_GET_URI).authenticated()
                         .anyRequest().authenticated()
 
                 )

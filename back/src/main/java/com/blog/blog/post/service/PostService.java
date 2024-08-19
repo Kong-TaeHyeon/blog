@@ -5,6 +5,7 @@ import com.blog.blog.post.entity.Post;
 import com.blog.blog.post.repository.PostRepository;
 import com.blog.blog.user.entity.User;
 import com.blog.blog.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,17 +41,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> findAll(Pageable pageable) {
-
-
-        Page<Post> test= postRepository.findAllByOrderByIdDesc(pageable);
-
-        return postRepository.findAllByOrderByIdDesc(pageable).getContent();
+    public Page<Post> findAll(Pageable pageable) {
+        return postRepository.findAllByOrderByIdDesc(pageable);
     }
 
     public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new RuntimeException());
+    }
 
+    @Transactional
+    public void deletePost(List<Long> ids) {
+        postRepository.deleteAllById(ids);
     }
 
 }

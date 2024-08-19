@@ -37,6 +37,7 @@ public class TokenExceptionFilter extends OncePerRequestFilter {
             response.getWriter().write(getResponse(e));
         } catch (Exception e) {
             log.info("Exception = {} ",e.getMessage());
+            e.printStackTrace();
             filterChain.doFilter(request, response);
         }
     }

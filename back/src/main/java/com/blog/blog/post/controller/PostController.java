@@ -1,13 +1,12 @@
 package com.blog.blog.post.controller;
 
-import com.blog.blog.post.dto.PostCreateRequest;
-import com.blog.blog.post.dto.PostCreateResponse;
-import com.blog.blog.post.dto.PostGetResponse;
+import com.blog.blog.post.dto.*;
 import com.blog.blog.post.entity.Post;
 import com.blog.blog.post.service.PostService;
 import com.blog.blog.user.dto.UserGetResponse;
 import com.blog.blog.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -48,11 +47,10 @@ public class PostController {
     }
 
     @GetMapping("/api/post")
-    public ResponseEntity<List<PostGetResponse>> getPosts(Pageable pageable) {
-        log.info("Page Number = {}", pageable.getPageNumber());
-        log.info("Page Size = {}", pageable.getPageSize());
-        List<Post> posts= postService.findAll(pageable);
-        List<PostGetResponse> responses = posts.stream()
+    public ResponseEntity<PostPageResponse> getPosts(Pageable pageable) {
+        Page<Post> posts= postService.findAll(pageable);
+        List<Post> contents = posts.getContent();
+        List<PostGetResponse> postList = contents.stream()
                 .map(post -> {
                     User user = post.getUser();
                     UserGetResponse author = UserGetResponse.builder()
@@ -70,7 +68,13 @@ public class PostController {
                 })
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(responses);
+        PostPageResponse response = PostPageResponse.builder()
+                .posts(postList)
+                .currentPage(posts.getNumber())
+                .totalPages(posts.getTotalPages())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
 
@@ -90,5 +94,18 @@ public class PostController {
                 .author(author).build();
 
         return ResponseEntity.ok(response);
+    }
+
+
+    @DeleteMapping("/api/post")
+    public ResponseEntity<PostDeleteResponse> deletePost(@RequestBody PostDeleteRequest request) {
+
+
+        postService.deletePost(request.getIds());
+
+        return ResponseEntity.ok(PostDeleteResponse.builder()
+                .ids(request.getIds())
+                .body("Delete Success")
+                .build());
     }
 }
