@@ -7,6 +7,7 @@
 	const { isLogin } = data;
 
 	onMount(() => {
+		console.log(isLogin);
 		if (isLogin) {
 			goto('/main');
 		}
@@ -25,6 +26,7 @@
 		const httpURL = BACK_API('/api/auth/login');
 		const response = await fetch(httpURL, {
 			method: 'POST',
+			mode: 'cors',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -35,15 +37,7 @@
 
 			credentials: 'include'
 		});
-
-		console.log(response);
 		return;
-
-		const body = await response.text();
-		console.log(body);
-		if (body === 'good') {
-			window.location.href = '/main';
-		}
 	};
 </script>
 

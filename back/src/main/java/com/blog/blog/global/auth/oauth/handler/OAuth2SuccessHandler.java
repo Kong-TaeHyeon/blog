@@ -1,6 +1,6 @@
 package com.blog.blog.global.auth.oauth.handler;
 
-import com.blog.blog.global.auth.JwtProvider;
+import com.blog.blog.global.auth.jwt.JwtProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +32,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(cookie);
 
         response.setHeader("Authorization", token);
-        response.sendRedirect("http://localhost:5173/main");
+        response.sendRedirect("http://localhost:5173/");
     }
 }
