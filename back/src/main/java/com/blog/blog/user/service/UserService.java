@@ -5,6 +5,8 @@ import com.blog.blog.global.auth.jwt.JwtProvider;
 
 import com.blog.blog.user.entity.Role;
 import com.blog.blog.user.entity.User;
+import com.blog.blog.user.exception.UserException;
+import com.blog.blog.user.exception.UserErrorCode;
 import com.blog.blog.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +37,7 @@ public class UserService {
 
     public User join(String email, String nickname, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException();
+            throw new UserException(UserErrorCode.USERNAME_ALREADY_EXISTS);
         }
 
         User user = User.builder()

@@ -1,5 +1,7 @@
 package com.blog.blog.global.auth;
 
+import com.blog.blog.user.exception.UserErrorCode;
+import com.blog.blog.user.exception.UserException;
 import com.blog.blog.user.repository.UserRepository;
 import com.blog.blog.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,14 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findById(Long.parseLong(username))
-                .orElseThrow(() -> new UsernameNotFoundException("Could Not Found Username : " + username));
+                .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
 
         return new PrincipalDetails(user, null, null);
     }
 
     public UserDetails loadUserByEmailWithPassword(String email, String password) throws UsernameNotFoundException {
         User user = userRepository.findByEmailAndPassword(email,password)
-                .orElseThrow(() -> new RuntimeException("Could Not Found Email with Password: " + email + " " + password));
+                .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
 
         return new PrincipalDetails(user, null, null);
     }
