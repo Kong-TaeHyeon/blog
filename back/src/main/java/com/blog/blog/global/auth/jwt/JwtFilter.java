@@ -1,7 +1,5 @@
 package com.blog.blog.global.auth.jwt;
 
-import com.blog.blog.global.auth.SecurityConfig;
-import com.blog.blog.global.auth.exception.TokenNullException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

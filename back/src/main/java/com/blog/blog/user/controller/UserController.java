@@ -46,7 +46,7 @@ public class UserController {
         ResponseDto<UserJoinResponse> responseDto = new ResponseDto<>();
 
         responseDto.data = new UserJoinResponse(user.getEmail(), user.getNickname());
-        responseDto.status = HttpStatus.CREATED;
+        responseDto.status = HttpStatus.CREATED.value();
 
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);

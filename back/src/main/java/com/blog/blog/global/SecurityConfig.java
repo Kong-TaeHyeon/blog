@@ -1,4 +1,4 @@
-package com.blog.blog.global.auth;
+package com.blog.blog.global;
 
 import com.blog.blog.global.auth.jwt.JwtFilter;
 import com.blog.blog.global.auth.jwt.TokenExceptionFilter;

@@ -2,7 +2,7 @@ package com.blog.blog.global.auth.jwt;
 
 import com.blog.blog.global.auth.exception.TokenInvalidException;
 import com.blog.blog.global.auth.exception.TokenNullException;
-import com.blog.blog.global.dto.ExceptionResponseDto;
+import com.blog.blog.global.dto.FilterExceptionResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -45,16 +45,16 @@ public class TokenExceptionFilter extends OncePerRequestFilter {
     public static String getResponse(Exception e) throws JsonProcessingException {
         if (e instanceof TokenInvalidException) {
             TokenInvalidException tokenInvalidException = (TokenInvalidException) e;
-            return new ObjectMapper().writeValueAsString(new ExceptionResponseDto(tokenInvalidException.code, tokenInvalidException.getMessage()));
+            return new ObjectMapper().writeValueAsString(new FilterExceptionResponseDto(tokenInvalidException.code, tokenInvalidException.getMessage()));
         }
 
         if (e instanceof TokenNullException) {
             TokenNullException tokenNullException = (TokenNullException) e;
-            return new ObjectMapper().writeValueAsString(new ExceptionResponseDto(tokenNullException.code, tokenNullException.getMessage()));
+            return new ObjectMapper().writeValueAsString(new FilterExceptionResponseDto(tokenNullException.code, tokenNullException.getMessage()));
         }
 
         e.printStackTrace();
-        return new ObjectMapper().writeValueAsString(new ExceptionResponseDto(500, e.getMessage()));
+        return new ObjectMapper().writeValueAsString(new FilterExceptionResponseDto(500, e.getMessage()));
     }
 
 }
